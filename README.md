@@ -44,7 +44,54 @@ notes/                    # Optional if you have any notes you took during repro
 
 **For each folder and file, provide a brief description of what it contains.**
 
-### 3. Setup Instructions
+### 3. Setup and Replication Instructions
+
+#### 1. Pre-Requisites
+
+* **Node.js**: (Latest LTS recommended)
+* **Python**: 3.12.* (For reproducibility)
+* **Hardware**: HPC access is recommended for the full 150k dataset.
+
+---
+
+#### 2. Setting up the Environment
+
+**JavaScript Dependencies** </br>
+
+From within the **src/** directory run
+```bash 
+    npm install
+```
+**Python Dependencies Environment** </br>
+
+From the **root** directory run </br>
+
+a. Create environment
+```bash
+ python3.12 -m venv venv 
+```
+
+b. Activate (Linux/macOS)
+```bash
+ source venv/bin/activate 
+```
+
+c. Install packages
+```bash
+   pip install -r requirements.txt
+```
+---
+
+#### 3. Data Preparation
+
+1. Download the JS150 Corpus: [ETH Zurich Dataset](http://www.srl.inf.ethz.ch/js150.php). place into **dataset/data/js/programs_all**
+
+> Subsetting: If you are using 10,000 files instead of the full set, create a custom training_subset.txt containing the first 10,000 paths from the original training list.
+
+---
+
+#### 4. Replication Steps (SwappedArgs)
+
 
 ```
 node src/javascript/extractFromJS.js calls --parallel 4 all dataset/data/js/programs_50 && mv calls_*.json results/
@@ -75,18 +122,25 @@ python3 src/python/BugLearn.py --pattern SwappedArgs --token_emb dataset/token_t
 
 ```
 
+#### Step 2
 
 
 
-- **Prerequisites**: Required software, tools, and versions
-  - OS requirements
-  - Programming language versions (Python, R, etc.)
-  - Required packages/libraries and versions
-  - Any other dependencies
-- **Installation Steps**: Step-by-step instructions to set up the environment
-  - How to install dependencies
-  - How to configure paths or settings
-  - Any environment variables needed
+Finding bugs
+
+1. Prepare dataset
+```
+node src/javascript/extractFromJS.js calls --parallel 4 all dataset/data/js/programs_50 && mv calls_*.json results/testing_data.json
+```
+
+
+2. Find bugs
+
+```
+python3 src/python/BugFind.py --pattern SwappedArgs --threshold 0.95 --model results/bug_detection_model_<<time stamp>>.keras --token_emb dataset/token_to_vector.json  --type_emb dataset/type_to_vector.json  --node_emb dataset/node_type_to_vector.json --testing_data results/testing_data.json
+```
+
+---
 
 ### 4. GenAI Usage
 
