@@ -11,8 +11,8 @@ from os import getcwd
 from collections import namedtuple
 import math
 
-from tensorflow.python.keras.models import Sequential
-from tensorflow.python.keras.layers.core import Dense, Dropout
+keras.models import Sequential
+from keras.layers import Dense, Dropout
 
 import time
 import numpy as np

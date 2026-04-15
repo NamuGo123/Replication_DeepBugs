@@ -9,7 +9,7 @@ import json
 from os.path import join
 from os import getcwd
 from collections import namedtuple
-from tensorflow.python.keras.models import load_model
+from tensorflow.keras.models import load_model
 import time
 import numpy as np
 import Util

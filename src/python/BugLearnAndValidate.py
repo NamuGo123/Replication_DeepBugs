@@ -12,8 +12,8 @@ from collections import Counter, namedtuple
 import math
 import argparse
 
-from tensorflow.python.keras.models import Sequential
-from tensorflow.python.keras.layers.core import Dense, Dropout
+from keras.models import Sequential
+from keras.layers import Dense, Dropout
 
 import time
 import numpy as np
@@ -142,7 +142,7 @@ if __name__ == '__main__':
                         batch_size=100, epochs=10, verbose=1)
 
     time_stamp = math.floor(time.time() * 1000)
-    model.save("results/bug_detection_model_"+str(time_stamp)) # To results
+    model.save("results/bug_detection_model_"+str(time_stamp)+".keras")
 
     time_learning_done = time.time()
     print("Time for learning (seconds): " +
