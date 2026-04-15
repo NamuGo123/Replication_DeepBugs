@@ -46,6 +46,14 @@ notes/                    # Optional if you have any notes you took during repro
 
 ### 3. Setup Instructions
 
+```
+node javascript/extractFromJS.js calls --parallel 4 dataset/data/js/programs_50_training.txt dataset/data/js/programs_50 results/
+
+```
+
+
+B) Train a classifier for later use python3 python/BugLearn.py --pattern SwappedArgs --token_emb token_to_vector.json --type_emb type_to_vector.json --node_emb node_type_to_vector.json --training_data calls_xx*.json
+
 - **Prerequisites**: Required software, tools, and versions
   - OS requirements
   - Programming language versions (Python, R, etc.)
