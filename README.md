@@ -84,7 +84,7 @@ c. Install packages
 
 #### 3. Data Preparation
 
-1. Download the JS150 Corpus: [ETH Zurich Dataset](http://www.srl.inf.ethz.ch/js150.php). place into **dataset/data/js/programs_all**
+1. Download the JS150 Corpus: [ETH Zurich Dataset](http://files.srl.inf.ethz.ch/data/py150.tar.gz). place into **dataset/data/js/programs_all**
 
 > Subsetting: If you are using 10,000 files instead of the full set, create a custom training_subset.txt containing the first 10,000 paths from the original training list.
 
