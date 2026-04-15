@@ -47,12 +47,36 @@ notes/                    # Optional if you have any notes you took during repro
 ### 3. Setup Instructions
 
 ```
-node javascript/extractFromJS.js calls --parallel 4 dataset/data/js/programs_50_training.txt dataset/data/js/programs_50 results/
+node src/javascript/extractFromJS.js calls --parallel 4 all dataset/data/js/programs_50 && mv calls_*.json results/
+
+```
+
+```
+node src/javascript/extractFromJS.js calls --parallel 4 all dataset/data/js/programs_50 && mv calls_*.json results/calls_training.json
+
+```
+
+```
+node src/javascript/extractFromJS.js calls --parallel 4 all dataset/data/js/programs_50 && mv calls_*.json results/calls_validation.json
+```
+
+Train and Validate 
+
+```
+python3 src/python/BugLearnAndValidate.py --pattern SwappedArgs --token_emb dataset/token_to_vector.json --type_emb dataset/type_to_vector.json --node_emb dataset/node_type_to_vector.json --training_data results/calls_training.json --validation_data results/calls_validation.json
 
 ```
 
 
-B) Train a classifier for later use python3 python/BugLearn.py --pattern SwappedArgs --token_emb token_to_vector.json --type_emb type_to_vector.json --node_emb node_type_to_vector.json --training_data calls_xx*.json
+Train a classifier for later use 
+
+```
+python3 src/python/BugLearn.py --pattern SwappedArgs --token_emb dataset/token_to_vector.json --type_emb dataset/type_to_vector.json --node_emb dataset/node_type_to_vector.json --training_data results/calls_*.json --out results/my_model.keras
+
+```
+
+
+
 
 - **Prerequisites**: Required software, tools, and versions
   - OS requirements
