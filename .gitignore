@@ -42,3 +42,11 @@ HyperExp*
 /.idea
 
 node_modules/
+deepbugs_env/
+calls_*.json
+results/calls_*.json
+dataset/data/js/programs_all/
+venv/
+*.tar.gz
+__pycache__/
+
