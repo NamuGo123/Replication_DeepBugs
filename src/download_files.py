@@ -2,7 +2,7 @@ import urllib.request
 import os
 
 input_file = "../dataset/data/js/additional_files.txt"
-output_dir = "../dataset/data/js/additional_files"
+output_dir = "../dataset/data/js/programs_additional"
 
 os.makedirs(output_dir, exist_ok=True)
 
