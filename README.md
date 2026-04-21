@@ -125,8 +125,7 @@ Run the full training and evaluation pipeline:
 **Step 1: Extract training and validation data**
 **Step 1a: Extract training data**
 ```bash
-node src/javascript/extractFromJS.js calls --parallel 4 \
-  dataset/data/js/programs_training.txt data/js/programs_all
+node src/javascript/extractFromJS.js calls --parallel 4 dataset/data/js/programs_training.txt data/js/programs_all
 ```
 
 **Step 1b: Merge training outputs into a single valid JSON array**
@@ -142,8 +141,7 @@ with open('results/calls_training.json', 'w') as fp: json.dump(data, fp)
 
 **Step 1c: Extract validation data**
 ```bash
-node src/javascript/extractFromJS.js calls --parallel 4 \
-  dataset/data/js/programs_eval.txt data/js/programs_all
+node src/javascript/extractFromJS.js calls --parallel 4 dataset/data/js/programs_eval.txt data/js/programs_all
 ```
 
 **Step 1d: Merge validation outputs into a single valid JSON array**
@@ -159,22 +157,12 @@ with open('results/calls_validation.json', 'w') as fp: json.dump(data, fp)
 
 **Step 2: Train and validate the classifier**
 ```bash
-python3 src/python/BugLearnAndValidate.py --pattern SwappedArgs \
-  --token_emb dataset/token_to_vector.json \
-  --type_emb dataset/type_to_vector.json \
-  --node_emb dataset/node_type_to_vector.json \
-  --training_data results/calls_training.json \
-  --validation_data results/calls_validation.json
+python3 src/python/BugLearnAndValidate.py --pattern SwappedArgs --token_emb dataset/token_to_vector.json --type_emb dataset/type_to_vector.json --node_emb dataset/node_type_to_vector.json --training_data results/calls_training.json --validation_data results/calls_validation.json
 ```
 
 **Step 3: Train classifier for later use**
 ```bash
-python3 src/python/BugLearn.py --pattern SwappedArgs \
-  --token_emb dataset/token_to_vector.json \
-  --type_emb dataset/type_to_vector.json \
-  --node_emb dataset/node_type_to_vector.json \
-  --training_data results/calls_training.json \
-  --out results/my_model.keras
+python3 src/python/BugLearn.py --pattern SwappedArgs --token_emb dataset/token_to_vector.json --type_emb dataset/type_to_vector.json --node_emb dataset/node_type_to_vector.json --training_data results/calls_training.json --out results/Part_1/my_model.keras
 ```
 
 > **HPC users:** All steps above are automated in `hpc_resources/swappedargs_2.sh`.
