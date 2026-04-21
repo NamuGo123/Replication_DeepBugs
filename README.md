@@ -184,26 +184,24 @@ python3 src/python/BugLearn.py --pattern SwappedArgs \
 
 #### Task 2: Bug Finding on Additional Real-World JS Files
 
-```
+
 **Step 1: Extract code pieces
-
+```
 node src/javascript/extractFromJS.js calls --files <list of files>
-
+```
 The command produces calls_*.json files, which is data suitable for the SwappedArgs bug detector.
 
 
 **Step 2: Use a trained classifier to identify bugs
-
+```
 python3 src/python/BugFind.py --pattern SwappedArgs --threshold 0.95 --model results/Part_1/my_model.keras --token_emb dataset/token_to_vector.json --type_emb dataset/type_to_vector.json --node_emb dataset/node_type_to_vector.json --testing_data results/Part_2/calls_1776601747307.json
-
+```
 The first argument selects the bug pattern.
 0.95 is the threshold for reporting bugs; higher means fewer warnings of higher certainty.
 --model sets the directory to load a trained model from.
 The next three arguments are vector representations for tokens (here: identifiers and literals), for types, and for AST node types.
 The remaining argument is a list of .json files. They contain the data extracted in Step 1.
 The command examines every code piece and writes a list of potential bugs with its probability of being incorrect
-
-```
 
 ---
 
