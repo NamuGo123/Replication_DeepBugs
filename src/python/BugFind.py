@@ -2,6 +2,8 @@
 Created on Jun 23, 2017
 
 @author: Michael Pradel, Sabine Zach
+
+edited by Namu Go on April 20, 2026
 '''
 
 import sys
@@ -9,7 +11,8 @@ import json
 from os.path import join
 from os import getcwd
 from collections import namedtuple
-from tensorflow.keras.models import load_model
+import keras
+from keras import layers, Model
 import time
 import numpy as np
 import Util
@@ -128,8 +131,42 @@ if __name__ == '__main__':
     print("New Data examples   : " + str(len(xs_newdata)))
     print(learning_data.stats)
 
-    model = load_model(model_dir)
-    print("Loaded model.")
+    # model = load_model(model_dir)
+    # print("Loaded model.")
+    inputs = keras.Input(shape=(1210,), name="dropout_input")
+    x = layers.Dropout(0.2, name="dropout")(inputs)
+    x = layers.Dense(200, activation='relu', name="dense")(x)
+    x = layers.Dropout(0.2, name="dropout_1")(x)
+    outputs = layers.Dense(1, activation='sigmoid', name="dense_1")(x)
+    model = Model(inputs=inputs, outputs=outputs)
+
+    try:
+        class SilentDropout(layers.Layer):
+            def __init__(self, *args, **kwargs):
+                kwargs.pop('rate', None)
+                kwargs.pop('batch_input_shape', None)
+                super().__init__(**kwargs)
+            def call(self, x): return x
+
+        legacy_model = keras.models.load_model(
+            model_dir, 
+            custom_objects={'Dropout': SilentDropout},
+            compile=False,
+            safe_mode=False
+        )
+        
+        model.set_weights(legacy_model.get_weights())
+        print("Successfully injected weights into the new model.")
+        
+    except Exception as e:
+        print(f"Standard loading failed. Attempting H5-style direct weight load...")
+        try:
+            model.load_weights(model_dir, skip_mismatch=True)
+            print("Weights loaded via fallback.")
+        except:
+            print("CRITICAL: All loading methods failed. Please ensure your 'model/' directory contains the 'my_model.keras' file.")
+            sys.exit(1)
+            
 
     # predict ys for every selected piece of code
     ys_prediction = model.predict(xs_newdata)
