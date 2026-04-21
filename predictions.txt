@@ -1,0 +1,5 @@
+Prediction : 0.9867418 | SwappedArgs | hooks.js : 375 - 375 | ID:cb | ['ID:err', 'ID:request']
+Prediction : 0.9867418 | SwappedArgs | hooks.js : 400 - 400 | ID:cb | ['ID:err', 'ID:request']
+Prediction : 0.9851353 | SwappedArgs | request.js : 152 - 152 | ID:exist | ['ID:request', 'ID:name']
+Prediction : 0.98977816 | SwappedArgs | route.js : 503 - 503 | ID:on | ['LIT:close', 'ID:bind']
+Prediction : 0.97933286 | SwappedArgs | route.js : 574 - 574 | ID:bind | ['LIT:null', 'ID:reply']
